@@ -6,12 +6,13 @@ import models.*;
 public class UserTest extends UnitTest {
     private String name = "Bob";
 	private String email = "test@gmail.com";
+	private String password = "secret";
 
 	@Before
     public void setup() {
     	Fixtures.deleteAll();
 		
-		new User(email, "secret", name).save();
+		new User(email, password, name).save();
    	}
 
  	@Test
@@ -30,5 +31,12 @@ public class UserTest extends UnitTest {
 		bob.delete();
 		
 	    assertEquals(0, User.count());
+	}
+	
+	@Test
+	public void tryConnectAsUser() {
+	    assertNotNull(User.connect(email, password));
+	    assertNull(User.connect(email, "badpassword"));
+	    assertNull(User.connect("tom@gmail.com", password));
 	}
 }
