@@ -47,7 +47,7 @@ public class UserTest extends UnitTest {
 	    new Task(bob, taskValue).save();
 	    assertEquals(1, Task.count());
 
-	    // Retrieve all posts created by Bob
+	    // Retrieve all tasks created by Bob
 	    List<Task> bobTasks = Task.find("byUser", bob).fetch();
 		Task firstTask = bobTasks.get(0);
 

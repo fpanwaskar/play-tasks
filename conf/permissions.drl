@@ -1,0 +1,23 @@
+package MyApplicationPermissions;
+ 
+import play.modules.securePermissions.PermissionCheck;
+import play.modules.securePermissions.Role;
+ 
+import models.Task;
+
+rule hasUserRole
+when
+  $c: PermissionCheck(action in ("select"))
+  Role(name == "")
+then
+  $c.grant();
+end
+
+
+/* Super user can do everything */
+rule CanUserViewTasks
+when
+	$c: PermissionCheck(action in ("delete", "update", "insert", "select"))
+then
+  $c.grant();
+end
